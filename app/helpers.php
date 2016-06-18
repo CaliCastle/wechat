@@ -89,14 +89,11 @@ if (! function_exists('getReplyFromChat')) {
 
         $newAnswer = str_replace("图灵机器人", "小A", $answer);
 
-        $credentials = getClientCredentials((string)$user_id);
-
         Slack::to("#wechat")
-            ->withIcon($credentials->headimgurl)
             ->attach([
                 'fallback' => "小A的答复: {$newAnswer}",
                 'text' => "> 小A的答复: _{$newAnswer}_",
-                'pretext' => "来自微信用户 *{$credentials->nickname}*"
+                'pretext' => "*来自微信用户*"
             ])->send($content);
 
         return $newAnswer;
