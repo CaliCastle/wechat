@@ -114,6 +114,6 @@ if (! function_exists('slack')) {
      */
     function slack($content, $answer) 
     {
-        Slack::send("来自微信用户: :point_right: " . addslashes($content) . "\n>:bulb: 小A答复：_" . addslashes($answer) . "_" . "\n\n<https://mp.weixin.qq.com/cgi-bin/message|点击前往公众号管理页面>");
+        Slack::send("来自微信用户: :point_right: " . addslashes($content) . "\n>:bulb:  *小A答复：" . addslashes($answer) . "*" . " \n\n<https://mp.weixin.qq.com/cgi-bin/message|点击前往公众号管理页面>");
     }
 }
