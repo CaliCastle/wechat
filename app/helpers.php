@@ -88,28 +88,8 @@ if (! function_exists('getReplyFromChat')) {
         ])->getBody()->getContents();
 
         $newAnswer = str_replace("图灵机器人", "小A", $answer);
-        $content = addslashes($content);
-
-        Slack::send("*来自微信用户*: {$content}\n>小A答复：" . addslashes($newAnswer));
 
         return $newAnswer;
-    }
-}
-
-if (! function_exists('getClientCredentials')) {
-    /**
-     * Get the client's credentials.
-     *
-     * @return mixed
-     */
-    function getClientCredentials($id)
-    {
-        return json_decode(client()->get(config('wechat.credentialUrl'), [
-            'query' => [
-                'access_token' => Token::get(),
-                'openid' => $id
-            ]
-        ])->getBody()->getContents());
     }
 }
 
@@ -122,5 +102,18 @@ if (! function_exists('client')) {
     function client()
     {
         return new \GuzzleHttp\Client;
+    }
+}
+
+if (! function_exists('slack')) {
+    /**
+     * Send notification to slack.
+     * 
+     * @param $content
+     * @param $answer
+     */
+    function slack($content, $answer) 
+    {
+        Slack::send("*来自微信用户*:" . addslashes($content) . "\n>小A答复：" . addslashes($answer));
     }
 }

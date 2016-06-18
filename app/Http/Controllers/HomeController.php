@@ -53,6 +53,7 @@ class HomeController extends Controller {
         // Example:
         $xmlObject = simplexml_load_string($xmlString, "SimpleXMLElement", LIBXML_NOCDATA);
         $xmlObject->MsgType = strtolower($xmlObject->MsgType);
+        $Content = null;
 
         switch ($xmlObject->MsgType) {
             /*
@@ -158,6 +159,10 @@ class HomeController extends Controller {
                 break;
             default:
                 break;
+        }
+        
+        if (isset($xmlObject->Content)) {
+            slack((string)$xmlObject->Content, (string)$Content);   
         }
 
         return '';
