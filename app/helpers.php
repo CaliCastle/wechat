@@ -82,14 +82,14 @@ if (! function_exists('getReplyFromChat')) {
         $answer = client()->post(config('wechat.replyUrl'), [
             'query' => [
                 'from_wechat' => 1,
-                'message'     => $content,
-                'user_id'     => $user_id
+                'message'     => (string)$content,
+                'user_id'     => (string)$user_id
             ]
         ])->getBody()->getContents();
-        
+
         $newAnswer = str_replace("图灵机器人", "小A", $answer);
 
-        $credentials = getClientCredentials($user_id);
+        $credentials = getClientCredentials((string)$user_id);
 
         Slack::to("#wechat")
             ->withIcon($credentials->headimgurl)
