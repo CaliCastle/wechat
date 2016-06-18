@@ -50,7 +50,7 @@ class HomeController extends Controller {
         // Get the data from Wechat server (Format: XML)
         $xmlString = file_get_contents("php://input");
         // Example:
-        $xmlObject = simplexml_load_string($xmlString);
+        $xmlObject = simplexml_load_string($xmlString, "SimpleXMLElement", LIBXML_NOCDATA);
         $xmlObject->MsgType = strtolower($xmlObject->MsgType);
         
         switch ($xmlObject->MsgType) {
