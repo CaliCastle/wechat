@@ -36,7 +36,7 @@ class HomeController extends Controller {
         if ($temp == $signature && $echostring) {
             exit($echostring);
         } else {
-            $this->replyMessage();
+            $this->replyMessage($request);
         }
     }
 
