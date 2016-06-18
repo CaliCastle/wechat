@@ -34,6 +34,10 @@ class HomeController extends Controller {
 
         $signature = $request->input('signature');
 
+        if (count($request->all()) == 0) {
+            return view('welcome');
+        }
+
         if ($temp == $signature && $echostring) {
             exit($echostring);
         } else {
@@ -160,9 +164,9 @@ class HomeController extends Controller {
             default:
                 break;
         }
-        
+
         if (isset($xmlObject->Content)) {
-            slack((string)$xmlObject->Content, (string)$Content);   
+            slack((string)$xmlObject->Content, (string)$Content);
         }
 
         return '';
