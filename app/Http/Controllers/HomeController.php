@@ -45,10 +45,10 @@ class HomeController extends Controller {
      * 
      * @return string
      */
-    public function replyMessage()
+    public function replyMessage(Request $request)
     {
         // Get the data from Wechat server (Format: XML)
-        $xmlString = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xmlString = $request->getQueryString();
         // Example:
         $xmlObject = simplexml_load_string($xmlString);
         $xmlObject->MsgType = strtolower($xmlObject->MsgType);
