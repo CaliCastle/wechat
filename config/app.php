@@ -155,6 +155,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
+        \Maknz\Slack\SlackServiceProvider::class
 
     ],
 
@@ -202,7 +204,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         
-        'Token' => \App\TokenFacade::class
+        'Token' => \App\TokenFacade::class,
+        'Slack' => \Maknz\Slack\Facades\Slack::class
 
     ],
 

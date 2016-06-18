@@ -61,7 +61,7 @@ if (! function_exists('sendMessageToChat')) {
     {
         client()->postAsync(config('wechat.sendUrl'), [
             'query' => [
-                'chat_message' => (string) $content,
+                'chat_message' => $content,
                 'from'         => 1,
                 'user_id'      => $user_id
             ]
@@ -82,14 +82,41 @@ if (! function_exists('getReplyFromChat')) {
         $answer = client()->post(config('wechat.replyUrl'), [
             'query' => [
                 'from_wechat' => 1,
-                'message'     => (string) $content,
+                'message'     => $content,
                 'user_id'     => $user_id
             ]
         ])->getBody()->getContents();
         
         $newAnswer = str_replace("图灵机器人", "小A", $answer);
 
+        $credentials = getClientCredentials($user_id);
+
+        Slack::to("#wechat")
+            ->withIcon($credentials->headimgurl)
+            ->attach([
+                'fallback' => "小A的答复: {$newAnswer}",
+                'text' => "> 小A的答复: _{$newAnswer}_",
+                'pretext' => "来自微信用户 *{$credentials->nickname}*"
+            ])->send($content);
+
         return $newAnswer;
+    }
+}
+
+if (! function_exists('getClientCredentials')) {
+    /**
+     * Get the client's credentials.
+     *
+     * @return mixed
+     */
+    function getClientCredentials($id)
+    {
+        return json_decode(client()->get(config('wechat.credentialUrl'), [
+            'query' => [
+                'access_token' => Token::get(),
+                'openid' => $id
+            ]
+        ])->getBody()->getContents());
     }
 }
 

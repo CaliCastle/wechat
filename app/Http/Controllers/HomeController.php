@@ -9,14 +9,14 @@ class HomeController extends Controller {
 
     /**
      * First time welcome message.
-     * 
+     *
      * @var string
      */
     protected $welcomeMessage = "感谢你的关注~ 初次见面请多关照噢(●'◡'●)ﾉ♥ 我叫小A，是 Abletive 的智能AI，赶快来认领我与我聊天哟，launchpad没灯光没声音，io等常见问题，输入关键字【工程下载】，【abletive】，【bgm下载】，【城市名+天气预报】，【我的小A】，【技能列表】，【现在几点】等技能等你来发掘<span class=\"emoji emoji27b0\"></span>。喜欢的话别忘了告诉小伙伴们噢_(:з」∠)_ 哈哈";
-    
+
     /**
      * Endpoint handler.
-     * 
+     *
      * @param Request $request
      */
     public function index(Request $request)
@@ -42,7 +42,7 @@ class HomeController extends Controller {
 
     /**
      * Get the appropriate message to reply.
-     * 
+     *
      * @return string
      */
     public function replyMessage(Request $request)
@@ -52,7 +52,7 @@ class HomeController extends Controller {
         // Example:
         $xmlObject = simplexml_load_string($xmlString, "SimpleXMLElement", LIBXML_NOCDATA);
         $xmlObject->MsgType = strtolower($xmlObject->MsgType);
-        
+
         switch ($xmlObject->MsgType) {
             /*
             <xml>
@@ -119,8 +119,8 @@ class HomeController extends Controller {
                         break;
                     default:
                         $Content = $xmlObject->Content;
-                        sendMessageToChat($ToUserName, $Content);
-                        if ($reply = getReplyFromChat($ToUserName, $Content)) {
+                        sendMessageToChat($ToUserName, (string)$Content);
+                        if ($reply = getReplyFromChat($ToUserName, (string)$Content)) {
                             $Content = $reply;
                         }
                         break;
@@ -158,13 +158,13 @@ class HomeController extends Controller {
             default:
                 break;
         }
-        
+
         return '';
     }
 
     /**
      * Get the access token.
-     * 
+     *
      * @return string
      */
     public function getToken()
