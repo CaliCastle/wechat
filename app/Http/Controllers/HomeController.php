@@ -118,9 +118,9 @@ class HomeController extends Controller {
                         $Content = '<a href="http://abletive.com/" >Abletive 音乐社区</a>，我的家~ (^0^)/传送门：\n<a href="http://bbs.abletive.com/home" >Abletive 论坛</a>\n<a href="http://lp.abletive.com/" >Abletive第一届Launchpad 工程大赛</a>\n<a href="http://www.calicastle.com/" >Cali 男神的主页</a>\n<a href="http://wechat.abletive.com/" >官方微信平台</a>\n<a href="http://weibo.com/abletive" >官方微博</a>';
                         break;
                     default:
-//                        $Content = C('COMING_SOON');
-                        sendMessageToChat($ToUserName, $xmlObject->Content);
-                        if ($reply = getReplyFromChat($ToUserName, $xmlObject->Content)) {
+                        $Content = $xmlObject->Content;
+                        sendMessageToChat($ToUserName, $Content);
+                        if ($reply = getReplyFromChat($ToUserName, $Content)) {
                             $Content = $reply;
                         }
                         break;

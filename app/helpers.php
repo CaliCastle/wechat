@@ -59,9 +59,9 @@ if (! function_exists('sendMessageToChat')) {
      */
     function sendMessageToChat($user_id, $content)
     {
-        client()->get(config('wechat.sendUrl'), [
+        client()->postAsync(config('wechat.sendUrl'), [
             'query' => [
-                'chat_message' => $content,
+                'chat_message' => (string) $content,
                 'from'         => 1,
                 'user_id'      => $user_id
             ]
@@ -79,14 +79,14 @@ if (! function_exists('getReplyFromChat')) {
      */
     function getReplyFromChat($user_id, $content)
     {
-        $answer = client()->get(config('wechat.replyUrl'), [
+        $answer = client()->post(config('wechat.replyUrl'), [
             'query' => [
                 'from_wechat' => 1,
-                'message'     => $content,
+                'message'     => (string) $content,
                 'user_id'     => $user_id
             ]
         ])->getBody()->getContents();
-
+        
         $newAnswer = str_replace("图灵机器人", "小A", $answer);
 
         return $newAnswer;
