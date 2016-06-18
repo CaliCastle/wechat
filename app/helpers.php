@@ -88,13 +88,9 @@ if (! function_exists('getReplyFromChat')) {
         ])->getBody()->getContents();
 
         $newAnswer = str_replace("图灵机器人", "小A", $answer);
+        $content = addslashes($content);
 
-        Slack::to("#wechat")
-            ->attach([
-                'fallback' => "小A的答复: {$newAnswer}",
-                'text' => "> 小A的答复: _{$newAnswer}_",
-                'pretext' => "*来自微信用户*"
-            ])->send($content);
+        Slack::send("*来自微信用户*: {$content}\n>小A答复：" . addslashes($newAnswer));
 
         return $newAnswer;
     }

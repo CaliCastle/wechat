@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Slack;
 use Token;
 use Illuminate\Http\Request;
 
